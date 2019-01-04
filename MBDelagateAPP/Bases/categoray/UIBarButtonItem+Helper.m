@@ -19,7 +19,7 @@
     [button setImage:[UIImage imageNamed:@"icon-back"] forState:UIControlStateNormal];
     [button addTarget:target action:action forControlEvents:UIControlEventTouchUpInside];
     [button setImageEdgeInsets:UIEdgeInsetsMake(12, 0, 12, 32)];
-   
+    [button setTitle:@"" forState:UIControlStateNormal];
     return [[UIBarButtonItem alloc] initWithCustomView:button];
 }
 

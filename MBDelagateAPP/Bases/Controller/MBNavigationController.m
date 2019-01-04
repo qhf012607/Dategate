@@ -11,7 +11,7 @@
 #import "UIBarButtonItem+Helper.h"
 #import "UIViewController+Addtion.h"
 
-@interface MBNavigationController () <UINavigationControllerDelegate, UIGestureRecognizerDelegate>
+@interface MBNavigationController () <UINavigationControllerDelegate,UINavigationBarDelegate, UIGestureRecognizerDelegate>
 
 @end
 
@@ -27,16 +27,19 @@
     [self.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [self.navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
     [self.navigationBar setShadowImage:[UIImage imageWithColor:RGB(106, 106, 106) size:CGSizeMake([UIScreen mainScreen].bounds.size.width, 1)]];
+    self.navigationBar.backIndicatorImage = [UIImage imageNamed:@"icon-backnew"];
+    self.navigationBar.backIndicatorTransitionMaskImage =[UIImage imageNamed:@"icon-backnew"];
+    self.navigationBar.tintColor=[UIColor whiteColor];
+}
 
+- (BOOL)navigationBar:(UINavigationBar *)navigationBar shouldPopItem:(UINavigationItem *)item{
+    [self popSelf];
+    return YES;
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated enablePopGesture:(BOOL)enablePopGesture {
     _enablePopGesture = enablePopGesture;
-
-    if (self.viewControllers.count > 0) {
-        viewController.navigationItem.leftBarButtonItem = [UIBarButtonItem createDefaultLeftBarItemWithTarget:self action:@selector(popSelf)];
-    }
-    
+   
     if ([self respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.interactivePopGestureRecognizer.enabled = NO;
     }
@@ -45,6 +48,8 @@
 }
 
 - (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated{
+    
+    [viewController.navigationItem.backBarButtonItem setTitle:@""];
     if(viewController.hiddenNav){
         [self setNavigationBarHidden:YES animated:YES];
     }else{
@@ -53,12 +58,14 @@
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    viewController.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
     //此处设置大于0或者等于1都可以
     if (self.viewControllers.count > 0) {
         [viewController setHidesBottomBarWhenPushed:YES];
     }
     [self pushViewController:viewController animated:animated enablePopGesture:YES];
 }
+
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
     _enablePopGesture = YES;
