@@ -124,10 +124,16 @@
             request.httpMethod = kXMHTTPMethodGET;
             
         } onSuccess:^(id responseObject) {
-//            NSDictionary *dic = responseObject;
            
-            [subscriber sendNext:responseObject];
-            [subscriber sendCompleted];
+            NSDictionary *dic = responseObject;
+            NSNumber *code = dic[@"code"];
+            if (code == nil || [code intValue] == 0) {
+                [subscriber sendNext:responseObject];
+                [subscriber sendCompleted];
+            }else{
+                NSError *error = [NSError errorWithDomain:@"" code:[code intValue]  userInfo:nil];
+                [subscriber sendError:error];
+            }
            
         } onFailure:^(NSError *error) {
             NSLog(@"oldError = %@",error);
