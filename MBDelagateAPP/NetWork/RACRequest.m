@@ -10,7 +10,7 @@
 #import "XMNetworking.h"
 //#import "UIDevice+FCUUID.h"
 #import "objc/runtime.h"
-#define Server @"http://json.ssports.com"
+#define Server @"http://manner8.com"
 
 @implementation RACRequest
 
@@ -32,7 +32,10 @@
     
     [XMCenter setupConfig:^(XMConfig *config) {
         config.generalServer = Server;
-        //        config.generalHeaders = @{@"general-header": @"general header value"};
+        if ([DLMemberCenter center].token.length>0) {
+             config.generalHeaders = @{@"Authorization": [DLMemberCenter center].token};
+        }
+       
         /*
         if(GGappDelegate.raUser)
         {
@@ -43,9 +46,9 @@
             NSString *auditStatus = GGappDelegate.isExamine ? @"1" : @"2";//1审核中 2非审核
             config.generalParameters = @{@"clientType":@"苹果",@"auditStatus":auditStatus,@"clientVersion":[self getVersion],@"imei":[FCUUID uuidForDevice]};
         }*/
-        if(need){
-            config.generalParameters = @{@"p":@"ios",@"app_version":[self getVersion],@"uid":@"AFFF65AA-E5B3-400D-8679-B367393848E0"};
-        }
+//        if(need){
+//            config.generalParameters = @{@"p":@"ios",@"app_version":[self getVersion],@"uid":@"AFFF65AA-E5B3-400D-8679-B367393848E0"};
+//        }
         config.generalUserInfo = nil;
         config.callbackQueue = dispatch_get_main_queue();
         config.engine = [XMEngine sharedEngine];
@@ -65,27 +68,33 @@
             NSError *error = [NSError errorWithDomain:@"网络不给力" code:888 userInfo:nil];
             [subscriber sendError:error];
         }
+
 //        [XMCenter defaultCenter].engine.afJSONResponseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"application/json", @"text/json", @"text/javascript", @"text/html", @"text/plain", nil];
         [XMCenter sendRequest:^(XMRequest *request) {
             request.api = url;
             request.parameters = parameters;
             request.timeoutInterval = 20;
         } onSuccess:^(id responseObject) {
-            
+
 //            NSError *testError = [NSError errorWithDomain:@"测试异常" code:888 userInfo:nil];
 //            [subscriber sendError:testError];
             //将数据捆版到signal
-            
-            [subscriber sendNext:responseObject];
-            [subscriber sendCompleted];
+            NSDictionary *dic = responseObject;
+            NSNumber *code = dic[@"code"];
+            if (code == nil || [code intValue] == 0) {
+                [subscriber sendNext:responseObject];
+                [subscriber sendCompleted];
+            }else{
+                NSError *error = [NSError errorWithDomain:@"" code:[code intValue]  userInfo:nil];
+                [subscriber sendError:error];
+            }
         } onFailure:^(NSError *error) {
             NSLog(@"oldError = %@",error);
 #if DEBUG
-            
+
 #else
-            error = [NSError errorWithDomain:@"网络不给力！" code:999 userInfo:nil];
+            error = [NSError errorWithDomain:@"服务器异常！" code:999 userInfo:nil];
 #endif
-            
             [subscriber sendError:error];
         }];
         return [RACDisposable disposableWithBlock:^
@@ -115,14 +124,17 @@
             request.httpMethod = kXMHTTPMethodGET;
             
         } onSuccess:^(id responseObject) {
+//            NSDictionary *dic = responseObject;
+           
             [subscriber sendNext:responseObject];
             [subscriber sendCompleted];
+           
         } onFailure:^(NSError *error) {
             NSLog(@"oldError = %@",error);
 #if DEBUG
             
 #else
-            error = [NSError errorWithDomain:@"网络不给力！" code:999 userInfo:nil];
+            error = [NSError errorWithDomain:@"服务器异常！" code:999 userInfo:nil];
 #endif
             [subscriber sendError:error];
         }];

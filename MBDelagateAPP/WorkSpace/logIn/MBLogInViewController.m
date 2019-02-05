@@ -173,7 +173,13 @@
 
 //登录按钮点击事件
 -(void)logInOnClick{
-    
+    NSDictionary *dic = @{@"username":@"mx360qun",@"password":@"mx360qun"};
+    WEAKSELF;
+    [[PRNetWork loginWith:dic]subscribeNext:^(id x) {
+        
+    } error:^(NSError *error) {
+        [MBProgressHUD showMessage:[PRNetWork getErrorString:error.code] toView:weakSelf.view];
+    }];
     if ([NSString judgePassWordLegal:_accountTf.mbTextField.text]) {
         //请求登录
         MBBaseViewController *cont = [[MBBaseViewController alloc]init];

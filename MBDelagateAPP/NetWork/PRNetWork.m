@@ -10,78 +10,26 @@
 
 @implementation PRNetWork
 
-/** 首页 */
-+ (RACSignal *)MJHomeWith:(NSDictionary *)dict{
-    NSString *page = dict[@"page"];
-    NSString *url = [NSString stringWithFormat:@"/matchData/appChannelList_2127885_%@.json",page];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
+/** 登录 */
++ (RACSignal *)loginWith:(NSDictionary *)dict{
+    NSString *url = @"/agent2/api/auth/login";
+    return   [[RACRequest postDataWithUrl:url dic:dict] map:^id(id value) {
+        NSDictionary *dic = value;
+        NSString *access_token = dic[@"access_token"];
+        NSString *token_type = dic[@"token_type"];
+        NSString *token = [NSString stringWithFormat:@"%@ %@",token_type,access_token];
+        [[DLMemberCenter center]setTokenAfterLogin:token];
         return value;
-    }];
+    }] ;
 }
 
-+ (RACSignal *)MJArticleDetailWith:(NSDictionary *)dict{
-    NSString *numarticleid = dict[@"numarticleid"];
-    NSString *url = [NSString stringWithFormat:@"/news/appArticleDetail_%@.json",numarticleid];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
-}
 
-+ (RACSignal *)MJArticleListWith:(NSDictionary *)dict{
-    NSString *page = dict[@"page"];
-    NSString *url = [NSString stringWithFormat:@"/matchData/appNewsList_%@.json",page];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
-}
 
-+ (RACSignal *)MJVideoListWith:(NSDictionary *)dict{
-    NSString *numarticleid = dict[@"numarticleid"];
-    NSString *url = [NSString stringWithFormat:@"/play/appArticleDetail_%@.json",numarticleid];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
++(NSString*)getErrorString:(NSInteger)code{
+    NSDictionary *dic = @{@"1001":@"系统错误，请重试",@"3000":@"日期范围错误，请查询三个月内记录",@"3001":@"日期不能为空",@"3002":@"日期格式错误",@"3003":@"数字显示格式错误",@"3004":@"旧密码错误",@"3006":@"登录失败",@"3007":@"已读失败",@"3008":@"删除失败",@"4000":@"不被授权",@"9000":@"未知错误",@"888":@"网络异常",@"999":@"服务器异常"};
+    NSString *codestring = [NSString stringWithFormat:@"%ld",(long)code];
+    NSString *errorString = [dic valueForKey:codestring];
+    return errorString;
 }
-//GET /matchinfo/app/matchinfo_35902833.json HTTP/1.1
-//GET /matchData/1097/appMatchView_35902833.json HTTP/1.1
-+ (RACSignal *)MJMatchInfoWith:(NSDictionary *)dict{
-    NSString *matchId = dict[@"matchId"];
-    NSString *leagueid = dict[@"leagueid"];
-    NSString *url = [NSString stringWithFormat:@"/matchData/%@/appMatchView_%@.json",leagueid,matchId];
-//    NSString *url = [NSString stringWithFormat:@"/matchinfo/app/matchinfo_%@.json",matchId];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
-}
-/** 赛程 */
-+ (RACSignal *)MJFixtureWith:(NSDictionary *)dict{
-    NSString *page = dict[@"page"];
-    NSString *url = [NSString stringWithFormat:@"/matchData/appMatchList_recommend_%@.json",page];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
-}
-
-#pragma mark - 数据
-
-+ (RACSignal *)MJDataListWith:(NSDictionary *)dict categoryNum:(NSString *)categoryNum categoryKey:(NSString *) key
-{
-    
-    NSString *url = [NSString stringWithFormat:@"/leagueData/%@/appRankList_%@.json",categoryNum,key];
-    
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
-}
-
-/** 前两天的赛程 */
-+ (RACSignal *)MJFixtureUpWith:(NSDictionary *)dict{
-    NSString *page = dict[@"page"];
-    NSString *url = [NSString stringWithFormat:@"/matchData/appMatchList_recommend_up_%@.json",page];
-    return [[RACRequest getDataWithUrl:url dic:nil] map:^id(NSDictionary *value) {
-        return value;
-    }];
-}
-
 @end
 

@@ -116,6 +116,7 @@
 		D594403B2183091800AE5B52 /* BaoDianTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59440392183091800AE5B52 /* BaoDianTableViewCell.xib */; };
 		D594403F2183180500AE5B52 /* BDDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D594403D2183180500AE5B52 /* BDDetailViewController.m */; };
 		D59440402183180500AE5B52 /* BDDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D594403E2183180500AE5B52 /* BDDetailViewController.xib */; };
+		D5B7F6232205A092000B76F9 /* DLMemberCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D5B7F6222205A092000B76F9 /* DLMemberCenter.m */; };
 		D5C87A05217D7454008EEF55 /* PGDatePicker+Date.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C879D3217D7454008EEF55 /* PGDatePicker+Date.m */; };
 		D5C87A06217D7454008EEF55 /* PGDatePicker+MinuteAndSecond.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C879D5217D7454008EEF55 /* PGDatePicker+MinuteAndSecond.m */; };
 		D5C87A07217D7454008EEF55 /* PGDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D5C879D6217D7454008EEF55 /* PGDatePicker.m */; };
@@ -381,6 +382,8 @@
 		D594403C2183180500AE5B52 /* BDDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BDDetailViewController.h; sourceTree = "<group>"; };
 		D594403D2183180500AE5B52 /* BDDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BDDetailViewController.m; sourceTree = "<group>"; };
 		D594403E2183180500AE5B52 /* BDDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BDDetailViewController.xib; sourceTree = "<group>"; };
+		D5B7F6212205A092000B76F9 /* DLMemberCenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DLMemberCenter.h; sourceTree = "<group>"; };
+		D5B7F6222205A092000B76F9 /* DLMemberCenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DLMemberCenter.m; sourceTree = "<group>"; };
 		D5C879D2217D7454008EEF55 /* PGDatePicker+MonthDayHourMinuteSecond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGDatePicker+MonthDayHourMinuteSecond.h"; sourceTree = "<group>"; };
 		D5C879D3217D7454008EEF55 /* PGDatePicker+Date.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PGDatePicker+Date.m"; sourceTree = "<group>"; };
 		D5C879D4217D7454008EEF55 /* PGDatePicker+MonthDayHourMinute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PGDatePicker+MonthDayHourMinute.h"; sourceTree = "<group>"; };
@@ -946,10 +949,10 @@
 				D55690E121534FBF002C6304 /* CategoryModel.m */,
 				D55690A821534DAD002C6304 /* RegExp */,
 				D55690AB21534DAD002C6304 /* PRAppHelper.h */,
+				D55690CB21534DAD002C6304 /* PRAppHelper.m */,
 				D55690AC21534DAD002C6304 /* Storage */,
 				D55690AF21534DAD002C6304 /* Ganguo */,
 				D55690C621534DAD002C6304 /* LXScrollContentViewLib */,
-				D55690CB21534DAD002C6304 /* PRAppHelper.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -968,6 +971,8 @@
 			children = (
 				D55690AD21534DAD002C6304 /* CyUserDefaults.m */,
 				D55690AE21534DAD002C6304 /* CyUserDefaults.h */,
+				D5B7F6212205A092000B76F9 /* DLMemberCenter.h */,
+				D5B7F6222205A092000B76F9 /* DLMemberCenter.m */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -1470,6 +1475,7 @@
 				D54742D62164C9E900B9BDCE /* UIView+ORIBProperty.m in Sources */,
 				D54742C82164C9E900B9BDCE /* ClockViewModel.m in Sources */,
 				D51391A8217EF2D80062122E /* NotifactionCell.m in Sources */,
+				D5B7F6232205A092000B76F9 /* DLMemberCenter.m in Sources */,
 				21A5B54E218837E20088615F /* MBAlertView.m in Sources */,
 				D55690DF21534DC7002C6304 /* PRNetWork.m in Sources */,
 				D54742D22164C9E900B9BDCE /* UIControl+ORIBProperty.m in Sources */,

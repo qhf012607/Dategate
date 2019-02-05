@@ -30,4 +30,10 @@
  */
 + (RACSignal *)getDataWithUrl:(NSString *)url
                           dic:(NSDictionary *)parameters;
+
+
+
+
+
+
 @end
