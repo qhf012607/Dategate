@@ -32,6 +32,14 @@
     [self initUI];
 }
 
+- (void)viewWillAppear:(BOOL)animated{
+    [[PRNetWork getUserInfo]subscribeNext:^(id x) {
+        
+    } error:^(NSError *error) {
+        
+    }];
+}
+
 - (void)initUI{
     [self.view addSubview:self.imageBg];
     [self.view addSubview:self.navigationView];

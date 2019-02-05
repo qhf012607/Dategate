@@ -23,6 +23,15 @@
 
 
 
+
+/**
+ 获取用户信息接口
+
+ @param
+ @return dic
+ */
++ (RACSignal *)getUserInfo;
+
 /**
  获取错误提示
  

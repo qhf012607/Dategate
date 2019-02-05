@@ -12,14 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MBProgressHUD (Tool)
 
-+ (void)showSuccess:(NSString *)success;
-+ (void)showSuccess:(NSString *)success toView:(UIView *)view;
++ (MBProgressHUD*)showDefaultHudtoView:(UIView*)view;
 
-+ (void)showError:(NSString *)error;
-+ (void)showError:(NSString *)error toView:(UIView *)view;
 
 + (MBProgressHUD *)showMessage:(NSString *)message;
 + (MBProgressHUD *)showMessage:(NSString *)message toView:(UIView *)view;
++ (MBProgressHUD*)showHud:(NSString *)text  view:(UIView *)view;
 
 + (void)hideHUD;
 + (void)hideHUDForView:(UIView *)view;

@@ -25,6 +25,14 @@
 
 
 
+/** 用户详情 */
++ (RACSignal *)getUserInfo{
+    NSString *url = @"/agent2/api/agent/agentinfo";
+    return   [[RACRequest getDataWithUrl:url dic:nil] map:^id(id value) {
+        return value;
+    }] ;
+}
+
 +(NSString*)getErrorString:(NSInteger)code{
     NSDictionary *dic = @{@"1001":@"系统错误，请重试",@"3000":@"日期范围错误，请查询三个月内记录",@"3001":@"日期不能为空",@"3002":@"日期格式错误",@"3003":@"数字显示格式错误",@"3004":@"旧密码错误",@"3006":@"登录失败",@"3007":@"已读失败",@"3008":@"删除失败",@"4000":@"不被授权",@"9000":@"未知错误",@"888":@"网络异常",@"999":@"服务器异常"};
     NSString *codestring = [NSString stringWithFormat:@"%ld",(long)code];

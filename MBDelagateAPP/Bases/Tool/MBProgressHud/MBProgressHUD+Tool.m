@@ -30,4 +30,33 @@
     return hud;
 }
 
++ (MBProgressHUD*)showDefaultHudtoView:(UIView*)view{
+    if (view == nil)
+        view = [[UIApplication sharedApplication].windows lastObject];
+    // 快速显示一个提示信息
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    // 再设置模式
+    hud.mode = MBProgressHUDModeIndeterminate;
+    return hud;
+}
+
++ (MBProgressHUD*)showHud:(NSString *)text  view:(UIView *)view
+{
+    if (view == nil)
+        view = [[UIApplication sharedApplication].windows lastObject];
+    // 快速显示一个提示信息
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:view animated:YES];
+    if (text.length > 0) {
+        hud.labelText = text;
+    }else{
+        hud.labelText = @"";
+    }
+    // 再设置模式
+    hud.mode = MBProgressHUDModeCustomView;
+    return hud;
+}
+
++ (void)hideHUDForView:(UIView *)view{
+    [self hideHUDForView:view animated:true];
+}
 @end
